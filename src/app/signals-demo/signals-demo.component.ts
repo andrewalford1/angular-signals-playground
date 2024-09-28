@@ -50,11 +50,13 @@ export class SignalsDemoComponent {
     effect(() => {
       const selectedCharacter = this.selectedCharacter();
       if (selectedCharacter) {
-        console.log(selectedCharacter);
         starWarsService
           .getCharacterDetails(selectedCharacter)
           .pipe(takeUntilDestroyed(destroyRef))
-          .subscribe((x) => this.selectedCharacterDetails.set(x));
+          .subscribe((x) => {
+            console.log(x);
+            return this.selectedCharacterDetails.set(x);
+          });
       }
     });
   }

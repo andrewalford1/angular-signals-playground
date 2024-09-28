@@ -36,16 +36,20 @@ export class StarWarsApiService {
     return this.httpClient
       .get<any>(`https://swapi.dev/api/people/${character.id}`)
       .pipe(
-        map(
-          (x) =>
-            <CharacterDetails>{
-              name: x.name,
-              heightInches: x.height == 'unknown' ? x.height : `${x.height}"`,
-              weightPounds: x.mass == 'unknown' ? x.mass : `${x.mass}lbs`,
-              birthYear: x.birth_year,
-              sex: x.gender,
-            },
-        ),
+        map((x) => {
+          const id = parseInt(x.url.match(/\/people\/(\d+)\//)[1], 10);
+          const imageUrl = `./assets/images/${id}_${(x.name as string).toLowerCase().replace(/\s+/g, '_')}.png`;
+          //const imageUrl = `assets/images/4-lom.png`;
+          return <CharacterDetails>{
+            id,
+            name: x.name,
+            imageUrl,
+            heightInches: x.height == 'unknown' ? x.height : `${x.height}"`,
+            weightPounds: x.mass == 'unknown' ? x.mass : `${x.mass}lbs`,
+            birthYear: x.birth_year,
+            sex: x.gender,
+          };
+        }),
       );
   }
 
