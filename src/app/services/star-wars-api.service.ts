@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { Film } from '../models/Film';
 import { Character } from '../models/Character';
+import { CharacterDetails } from '../models/CharacterDetails';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,25 @@ export class StarWarsApiService {
     );
   }
 
+  public getCharacterDetails(
+    character: Character,
+  ): Observable<CharacterDetails> {
+    return this.httpClient
+      .get<any>(`https://swapi.dev/api/people/${character.id}`)
+      .pipe(
+        map(
+          (x) =>
+            <CharacterDetails>{
+              name: x.name,
+              heightInches: x.height == 'unknown' ? x.height : `${x.height}"`,
+              weightPounds: x.mass == 'unknown' ? x.mass : `${x.mass}lbs`,
+              birthYear: x.birth_year,
+              sex: x.gender,
+            },
+        ),
+      );
+  }
+
   public getCharactersByEpisodeId(episodeId: number): Observable<Character[]> {
     return this.getCharacterUrlsByEpisode(episodeId).pipe(
       switchMap((urls: string[]) => {
@@ -36,9 +56,15 @@ export class StarWarsApiService {
         return forkJoin(requests);
       }),
       map((characters) =>
-        characters.map(
-          (character, index) => <Character>{ id: index, name: character.name },
-        ),
+        characters
+          .map(
+            (character) =>
+              <Character>{
+                id: parseInt(character.url.match(/\/people\/(\d+)\//)[1], 10),
+                name: character.name,
+              },
+          )
+          .sort((a, b) => a.name.localeCompare(b.name)),
       ),
     );
   }

@@ -4,6 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Film } from '../models/Film';
 import { CommonModule } from '@angular/common';
 import { Character } from '../models/Character';
+import { CharacterDetails } from '../models/CharacterDetails';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-signals-demo',
@@ -16,6 +18,11 @@ export class SignalsDemoComponent {
   //protected selectedEpisodeSubject = new Subject<number>();
   protected selectedEpisode = signal<number | undefined>(undefined);
   protected charactersByEpisode = signal<Character[]>([]);
+
+  protected selectedCharacter = signal<Character | undefined>(undefined);
+  protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
+    undefined,
+  );
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
     // this.selectedEpisodeSubject
@@ -39,6 +46,17 @@ export class SignalsDemoComponent {
           .subscribe((x) => this.charactersByEpisode.set(x));
       }
     });
+
+    effect(() => {
+      const selectedCharacter = this.selectedCharacter();
+      if (selectedCharacter) {
+        console.log(selectedCharacter);
+        starWarsService
+          .getCharacterDetails(selectedCharacter)
+          .pipe(takeUntilDestroyed(destroyRef))
+          .subscribe((x) => this.selectedCharacterDetails.set(x));
+      }
+    });
   }
 
   protected selectEpisode(episodeId: number) {
@@ -50,5 +68,10 @@ export class SignalsDemoComponent {
       this.selectedEpisode.set(episodeId);
     }
     //this.selectedEpisodeSubject.next(episodeId);
+  }
+
+  protected selectCharacter(character: Character) {
+    this.selectedCharacterDetails.set(undefined);
+    this.selectedCharacter.set(character);
   }
 }
