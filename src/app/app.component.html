@@ -1,30 +1,27 @@
-<h1 class="text-3xl font-bold underline">Angular Router App</h1>
-<nav>
-  <ul>
-    <li>
-      <a
-        routerLink="/first-component"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >First Component</a
-      >
-    </li>
-    <li>
-      <a
-        routerLink="/second-component"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Second Component</a
-      >
-    </li>
-  </ul>
-</nav>
+<div class="flex h-full flex-col gap-8">
+  <h1 class="text-center text-4xl font-bold">Angular Signals Playground</h1>
+  <nav>
+    <ul class="flex flex-row justify-center gap-8 text-2xl font-bold">
+      <li>
+        <a
+          routerLink="/first-component"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          >Signals demo</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/second-component"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          >RXJS demo</a
+        >
+      </li>
+    </ul>
+  </nav>
 
-<button
-  class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3"
->
-  ...
-</button>
-
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>
+  <div class="h-full">
+    <router-outlet></router-outlet>
+  </div>
+</div>
