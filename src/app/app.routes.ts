@@ -5,5 +5,5 @@ import { RxjsDemoComponent } from './rxjs-demo/rxjs-demo.component';
 export const routes: Routes = [
   { path: 'signals-demo', component: SignalsDemoComponent },
   { path: 'rxjs-demo', component: RxjsDemoComponent },
-  { path: '', redirectTo: '/signals-demo', pathMatch: 'full' },
+  { path: '', redirectTo: '/rxjs-demo', pathMatch: 'full' },
 ];
