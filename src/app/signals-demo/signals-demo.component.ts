@@ -42,7 +42,6 @@ export class SignalsDemoComponent {
           .getCharacterDetails(selectedCharacter)
           .pipe(takeUntilDestroyed(destroyRef))
           .subscribe((x) => {
-            console.log(x);
             return this.selectedCharacterDetails.set(x);
           });
       }
