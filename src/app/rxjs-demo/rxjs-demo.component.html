@@ -48,5 +48,36 @@
     class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
   >
     <h2 class="text-3xl font-bold">Selected Character</h2>
+    <div
+      *ngIf="selectedCharacterDetails$ | async; let characterDetails"
+      class="flex flex-col gap-4"
+    >
+      <div class="flex w-full justify-center">
+        <img [src]="characterDetails.imageUrl" width="250px" height="250px" />
+      </div>
+
+      <table class="flex flex-col gap-4 p-4 text-center">
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Name:</th>
+          <td>{{ characterDetails.name }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Birth year:</th>
+          <td>{{ characterDetails.birthYear }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Sex:</th>
+          <td>{{ characterDetails.sex }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Height:</th>
+          <td>{{ characterDetails.heightInches }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Weight:</th>
+          <td>{{ characterDetails.weightPounds }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

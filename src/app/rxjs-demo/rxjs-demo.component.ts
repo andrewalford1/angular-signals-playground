@@ -4,6 +4,7 @@ import { Episode } from '../models/Episode';
 import { StarWarsApiService } from '../services/star-wars-api.service';
 import { Character } from '../models/Character';
 import { CommonModule } from '@angular/common';
+import { CharacterDetails } from '../models/CharacterDetails';
 
 @Component({
   selector: 'app-rxjs-demo',
@@ -31,13 +32,17 @@ export class RxjsDemoComponent implements OnInit {
     Character | undefined
   > = new BehaviorSubject<Character | undefined>(undefined);
 
+  protected selectedCharacterDetails$:
+    | Observable<CharacterDetails | undefined>
+    | undefined = undefined;
+
   constructor(private readonly starWarsService: StarWarsApiService) {}
 
   public ngOnInit() {
     this.selectedEpisode$ = this.selectedEpisodeSubject.asObservable();
 
     this.episodes$ = this.selectedEpisodeRefreshSubject.pipe(
-      switchMap((x) => this.starWarsService.getEpisodes()),
+      switchMap(() => this.starWarsService.getEpisodes()),
     );
 
     this.selectedCharacter$ = this.selectedCharacterSubject.asObservable();
@@ -46,6 +51,16 @@ export class RxjsDemoComponent implements OnInit {
       switchMap((episode) => {
         if (episode) {
           return this.starWarsService.getCharactersByEpisode(episode);
+        } else {
+          return of(undefined);
+        }
+      }),
+    );
+
+    this.selectedCharacterDetails$ = this.selectedCharacter$.pipe(
+      switchMap((character) => {
+        if (character) {
+          return this.starWarsService.getCharacterDetails(character);
         } else {
           return of(undefined);
         }
