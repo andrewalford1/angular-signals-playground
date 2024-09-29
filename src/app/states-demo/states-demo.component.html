@@ -1,1 +1,53 @@
-<p>states-demo works!</p>
+<div class="flex flex-col gap-2 p-4">
+  @for (episode of episodes(); track $index) {
+    <h3
+      class="cursor-pointer text-2xl font-bold hover:text-white"
+      (click)="selectEpisode(episode)"
+    >
+      {{ episode.title }}
+    </h3>
+  }
+</div>
+
+<div class="flex flex-row flex-wrap gap-4 scroll-auto p-4">
+  @for (character of selectedEpisodeCharacters() | async; track $index) {
+    <h3
+      class="cursor-pointer text-xl font-bold hover:text-white"
+      (click)="selectCharacter(character)"
+    >
+      {{ character.name }}
+    </h3>
+  }
+</div>
+
+<div
+  *ngIf="selectedCharacterDetails() | async; let characterDetails"
+  class="flex flex-col gap-4"
+>
+  <div class="flex w-full justify-center">
+    <img [src]="characterDetails.imageUrl" width="250px" height="250px" />
+  </div>
+
+  <table class="flex flex-col gap-4 p-4 text-center">
+    <tr class="grid grid-cols-2">
+      <th class="font-bold">Name:</th>
+      <td>{{ characterDetails.name }}</td>
+    </tr>
+    <tr class="grid grid-cols-2">
+      <th class="font-bold">Birth year:</th>
+      <td>{{ characterDetails.birthYear }}</td>
+    </tr>
+    <tr class="grid grid-cols-2">
+      <th class="font-bold">Sex:</th>
+      <td>{{ characterDetails.sex }}</td>
+    </tr>
+    <tr class="grid grid-cols-2">
+      <th class="font-bold">Height:</th>
+      <td>{{ characterDetails.heightInches }}</td>
+    </tr>
+    <tr class="grid grid-cols-2">
+      <th class="font-bold">Weight:</th>
+      <td>{{ characterDetails.weightPounds }}</td>
+    </tr>
+  </table>
+</div>

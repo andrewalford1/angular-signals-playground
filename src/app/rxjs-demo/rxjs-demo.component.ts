@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { Episode } from '../models/Episode';
 import { StarWarsApiService } from '../services/star-wars-api.service';
@@ -13,6 +13,8 @@ import { CharacterDetails } from '../models/CharacterDetails';
   templateUrl: './rxjs-demo.component.html',
 })
 export class RxjsDemoComponent implements OnInit {
+  private readonly starWarsService = inject(StarWarsApiService);
+
   protected episodes$: Observable<Episode[] | undefined> | undefined =
     undefined;
   protected selectedEpisode$: Observable<Episode | undefined> | undefined =
@@ -35,8 +37,6 @@ export class RxjsDemoComponent implements OnInit {
   protected selectedCharacterDetails$:
     | Observable<CharacterDetails | undefined>
     | undefined = undefined;
-
-  constructor(private readonly starWarsService: StarWarsApiService) {}
 
   public ngOnInit() {
     this.selectedEpisode$ = this.selectedEpisodeSubject.asObservable();
