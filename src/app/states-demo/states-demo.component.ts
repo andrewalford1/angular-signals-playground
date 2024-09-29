@@ -14,7 +14,7 @@ import { Character } from '../models/Character';
 export class StatesDemoComponent implements OnInit {
   private readonly starWarsService = inject(StarWarsApiService);
 
-  protected episodes = signal<Episode[]>([]);
+  protected episodes: Episode[] = [];
   private readonly selectedEpisode = signal<Episode | undefined>(undefined);
   private readonly selectedCharacter = signal<Character | undefined>(undefined);
 
@@ -43,7 +43,7 @@ export class StatesDemoComponent implements OnInit {
 
   public async ngOnInit() {
     const episodes$ = this.starWarsService.getEpisodes();
-    this.episodes.set(await firstValueFrom(episodes$));
+    this.episodes = await firstValueFrom(episodes$);
   }
 
   protected selectEpisode(episode: Episode) {

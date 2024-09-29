@@ -13,7 +13,7 @@ import { CharacterDetails } from '../models/CharacterDetails';
   templateUrl: './signals-demo.component.html',
 })
 export class SignalsDemoComponent {
-  protected episodes = signal<Episode[]>([]);
+  protected episodes: Episode[] = [];
   protected charactersByEpisode = signal<Character[]>([]);
   protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
     undefined,
@@ -23,7 +23,7 @@ export class SignalsDemoComponent {
   protected selectedCharacter = signal<Character | undefined>(undefined);
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
-    starWarsService.getEpisodes().subscribe((x) => this.episodes.set(x));
+    starWarsService.getEpisodes().subscribe((x) => (this.episodes = x));
 
     effect(() => {
       const selectedEpisode = this.selectedEpisode();
