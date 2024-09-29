@@ -2,6 +2,9 @@
   @for (episode of episodes; track $index) {
     <h3
       class="cursor-pointer text-2xl font-bold hover:text-white"
+      [ngClass]="{
+        'text-white underline': episode == selectedEpisode(),
+      }"
       (click)="selectEpisode(episode)"
     >
       {{ episode.title }}
@@ -13,6 +16,9 @@
   @for (character of selectedEpisodeCharacters() | async; track $index) {
     <h3
       class="cursor-pointer text-xl font-bold hover:text-white"
+      [ngClass]="{
+        'text-white underline': character == selectedCharacter(),
+      }"
       (click)="selectCharacter(character)"
     >
       {{ character.name }}

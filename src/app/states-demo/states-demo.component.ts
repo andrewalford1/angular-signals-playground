@@ -15,8 +15,10 @@ export class StatesDemoComponent implements OnInit {
   private readonly starWarsService = inject(StarWarsApiService);
 
   protected episodes: Episode[] = [];
-  private readonly selectedEpisode = signal<Episode | undefined>(undefined);
-  private readonly selectedCharacter = signal<Character | undefined>(undefined);
+  protected readonly selectedEpisode = signal<Episode | undefined>(undefined);
+  protected readonly selectedCharacter = signal<Character | undefined>(
+    undefined,
+  );
 
   protected selectedEpisodeCharacters = computed(async () => {
     const episode = this.selectedEpisode();
