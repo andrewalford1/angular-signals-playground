@@ -6,6 +6,13 @@ import { Character } from '../models/Character';
 import { CommonModule } from '@angular/common';
 import { CharacterDetails } from '../models/CharacterDetails';
 
+/**
+ * This is how I am use to interacting with observables.
+ * The behaviour subjects add a lot of complexity to the code
+ * making it difficult to read. One thing to note, I'm no RXJS
+ * expert, this may not be the best way to use it.
+ */
+
 @Component({
   selector: 'app-rxjs-demo',
   standalone: true,

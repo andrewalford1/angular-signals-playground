@@ -5,6 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Character } from '../models/Character';
 import { CharacterDetails } from '../models/CharacterDetails';
 
+/**
+ * This is a much more declarative approach. There is no conditional logic and
+ * Angular is managing all the states of the component. For example, we never set
+ * any variables ourselfs and the Angular signals are doing all the work of propegating
+ * their state and unsubscribing from observables.
+ */
+
 @Component({
   selector: 'app-states-demo',
   standalone: true,
