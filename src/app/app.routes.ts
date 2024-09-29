@@ -1,11 +1,14 @@
 import { Routes } from '@angular/router';
-import { SignalsDemoComponent } from './signals-demo/signals-demo.component';
+import { ImperativeSignalsDemoComponent } from './imperative-signals-demo/imperative-signals-demo.component';
 import { RxjsDemoComponent } from './rxjs-demo/rxjs-demo.component';
 import { DeclarativeSignalsDemoComponent } from './declarative-signals-demo/declarative-signals-demo.component';
 
 export const routes: Routes = [
   { path: 'rxjs-demo', component: RxjsDemoComponent },
-  { path: 'signals-demo', component: SignalsDemoComponent },
+  {
+    path: 'imperative-signals-demo',
+    component: ImperativeSignalsDemoComponent,
+  },
   {
     path: 'declarative-signals-demo',
     component: DeclarativeSignalsDemoComponent,

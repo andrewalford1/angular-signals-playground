@@ -10,9 +10,9 @@ import { CharacterDetails } from '../models/CharacterDetails';
   selector: 'app-signals-demo',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './signals-demo.component.html',
+  templateUrl: './imperative-signals-demo.component.html',
 })
-export class SignalsDemoComponent {
+export class ImperativeSignalsDemoComponent {
   protected episodes: Episode[] = [];
   protected charactersByEpisode = signal<Character[]>([]);
   protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
