@@ -13,6 +13,9 @@
           <h3
             class="cursor-pointer text-2xl font-bold hover:text-white"
             (click)="selectEpisode(episode)"
+            [ngClass]="{
+              'text-white underline': episode == (selectedEpisode$ | async),
+            }"
           >
             {{ episode.title }}
           </h3>
@@ -23,6 +26,22 @@
       class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
     >
       <h2 class="text-3xl font-bold">Character Selector</h2>
+      <div
+        *ngIf="(characters$ | async) ?? [] as characters"
+        class="flex flex-row flex-wrap gap-4 scroll-auto p-4"
+      >
+        @for (character of characters; track $index) {
+          <h3
+            class="text-xl font-bold hover:text-white"
+            (click)="selectCharacter(character)"
+            [ngClass]="{
+              'text-white underline': character == (selectedCharacter$ | async),
+            }"
+          >
+            {{ character.name }}
+          </h3>
+        }
+      </div>
     </div>
   </div>
   <div
@@ -31,7 +50,3 @@
     <h2 class="text-3xl font-bold">Selected Character</h2>
   </div>
 </div>
-
-<!-- [ngClass]="{
-              'text-white underline': episode == selectedEpisode(),
-            }" -->

@@ -14,7 +14,6 @@ import { CharacterDetails } from '../models/CharacterDetails';
 })
 export class SignalsDemoComponent {
   protected episodes = signal<Episode[]>([]);
-  //protected selectedEpisodeSubject = new Subject<number>();
   protected charactersByEpisode = signal<Character[]>([]);
   protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
     undefined,
@@ -24,18 +23,8 @@ export class SignalsDemoComponent {
   protected selectedCharacter = signal<Character | undefined>(undefined);
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
-    // this.selectedEpisodeSubject
-    //   .pipe(
-    //     switchMap((episodeId) =>
-    //       this.starWarsService.getCharactersByEpisodeId(episodeId),
-    //     ),
-    //     takeUntilDestroyed(),
-    //   )
-    //   .subscribe((x) => this.charactersByEpisode.set(x));
-
     starWarsService.getEpisodes().subscribe((x) => this.episodes.set(x));
 
-    // Fetch characters by episode.
     effect(() => {
       const selectedEpisode = this.selectedEpisode();
       if (selectedEpisode !== undefined) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { Episode } from '../models/Episode';
 import { StarWarsApiService } from '../services/star-wars-api.service';
 import { Character } from '../models/Character';
@@ -16,28 +16,49 @@ export class RxjsDemoComponent implements OnInit {
     undefined;
   protected selectedEpisode$: Observable<Episode | undefined> | undefined =
     undefined;
+  private readonly selectedEpisodeSubject: BehaviorSubject<
+    Episode | undefined
+  > = new BehaviorSubject<Episode | undefined>(undefined);
 
   private readonly selectedEpisodeRefreshSubject = new BehaviorSubject({});
-  private readonly selectedEpisode: BehaviorSubject<Episode | undefined> =
-    new BehaviorSubject<Episode | undefined>(undefined);
 
-  protected characters$: Observable<Episode | undefined> = new Observable(
+  protected characters$: Observable<Character[] | undefined> = new Observable(
     undefined,
   );
+  protected selectedCharacter$: Observable<Character | undefined> | undefined =
+    undefined;
+  private readonly selectedCharacterSubject: BehaviorSubject<
+    Character | undefined
+  > = new BehaviorSubject<Character | undefined>(undefined);
 
   constructor(private readonly starWarsService: StarWarsApiService) {}
 
   public ngOnInit() {
-    this.selectedEpisode$ = this.selectedEpisode.asObservable();
+    this.selectedEpisode$ = this.selectedEpisodeSubject.asObservable();
 
     this.episodes$ = this.selectedEpisodeRefreshSubject.pipe(
       switchMap((x) => this.starWarsService.getEpisodes()),
     );
+
+    this.selectedCharacter$ = this.selectedCharacterSubject.asObservable();
+
+    this.characters$ = this.selectedEpisode$.pipe(
+      switchMap((episode) => {
+        if (episode) {
+          return this.starWarsService.getCharactersByEpisode(episode);
+        } else {
+          return of(undefined);
+        }
+      }),
+    );
   }
 
   protected selectEpisode(episode: Episode) {
-    this.selectedEpisode.next(episode);
+    this.selectedCharacterSubject.next(undefined);
+    this.selectedEpisodeSubject.next(episode);
   }
 
-  protected selectCharacter(character: Character) {}
+  protected selectCharacter(character: Character) {
+    this.selectedCharacterSubject.next(character);
+  }
 }
