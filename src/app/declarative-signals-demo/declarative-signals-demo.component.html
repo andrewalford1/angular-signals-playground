@@ -6,7 +6,7 @@
       <h2 class="text-3xl font-bold">Episode Selector</h2>
 
       <div class="flex flex-col gap-2 p-4">
-        @for (episode of episodes; track $index) {
+        @for (episode of episodes(); track $index) {
           <h3
             class="cursor-pointer text-2xl font-bold hover:text-white"
             [ngClass]="{
@@ -25,7 +25,7 @@
       <h2 class="text-3xl font-bold">Character Selector</h2>
 
       <div class="flex flex-row flex-wrap gap-4 scroll-auto p-4">
-        @for (character of selectedEpisodeCharacters() | async; track $index) {
+        @for (character of selectedEpisodeCharacters(); track $index) {
           <h3
             class="cursor-pointer text-xl font-bold hover:text-white"
             [ngClass]="{
@@ -45,7 +45,7 @@
     <h2 class="text-3xl font-bold">Selected Character</h2>
 
     <div
-      *ngIf="selectedCharacterDetails() | async; let characterDetails"
+      *ngIf="selectedCharacterDetails(); let characterDetails"
       class="flex flex-col gap-4"
     >
       <div class="flex w-full justify-center">
