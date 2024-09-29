@@ -1,59 +1,79 @@
-<div class="flex flex-col gap-2 p-4">
-  @for (episode of episodes; track $index) {
-    <h3
-      class="cursor-pointer text-2xl font-bold hover:text-white"
-      [ngClass]="{
-        'text-white underline': episode == selectedEpisode(),
-      }"
-      (click)="selectEpisode(episode)"
+<div class="grid h-full grid-cols-2 gap-8">
+  <div class="grid h-full grid-rows-2 gap-8">
+    <div
+      class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
     >
-      {{ episode.title }}
-    </h3>
-  }
-</div>
+      <h2 class="text-3xl font-bold">Episode Selector</h2>
 
-<div class="flex flex-row flex-wrap gap-4 scroll-auto p-4">
-  @for (character of selectedEpisodeCharacters() | async; track $index) {
-    <h3
-      class="cursor-pointer text-xl font-bold hover:text-white"
-      [ngClass]="{
-        'text-white underline': character == selectedCharacter(),
-      }"
-      (click)="selectCharacter(character)"
+      <div class="flex flex-col gap-2 p-4">
+        @for (episode of episodes; track $index) {
+          <h3
+            class="cursor-pointer text-2xl font-bold hover:text-white"
+            [ngClass]="{
+              'text-white underline': episode == selectedEpisode(),
+            }"
+            (click)="selectEpisode(episode)"
+          >
+            {{ episode.title }}
+          </h3>
+        }
+      </div>
+    </div>
+    <div
+      class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
     >
-      {{ character.name }}
-    </h3>
-  }
-</div>
+      <h2 class="text-3xl font-bold">Character Selector</h2>
 
-<div
-  *ngIf="selectedCharacterDetails() | async; let characterDetails"
-  class="flex flex-col gap-4"
->
-  <div class="flex w-full justify-center">
-    <img [src]="characterDetails.imageUrl" width="250px" height="250px" />
+      <div class="flex flex-row flex-wrap gap-4 scroll-auto p-4">
+        @for (character of selectedEpisodeCharacters() | async; track $index) {
+          <h3
+            class="cursor-pointer text-xl font-bold hover:text-white"
+            [ngClass]="{
+              'text-white underline': character.id == selectedCharacter()?.id,
+            }"
+            (click)="selectCharacter(character)"
+          >
+            {{ character.name }}
+          </h3>
+        }
+      </div>
+    </div>
   </div>
+  <div
+    class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
+  >
+    <h2 class="text-3xl font-bold">Selected Character</h2>
 
-  <table class="flex flex-col gap-4 p-4 text-center">
-    <tr class="grid grid-cols-2">
-      <th class="font-bold">Name:</th>
-      <td>{{ characterDetails.name }}</td>
-    </tr>
-    <tr class="grid grid-cols-2">
-      <th class="font-bold">Birth year:</th>
-      <td>{{ characterDetails.birthYear }}</td>
-    </tr>
-    <tr class="grid grid-cols-2">
-      <th class="font-bold">Sex:</th>
-      <td>{{ characterDetails.sex }}</td>
-    </tr>
-    <tr class="grid grid-cols-2">
-      <th class="font-bold">Height:</th>
-      <td>{{ characterDetails.heightInches }}</td>
-    </tr>
-    <tr class="grid grid-cols-2">
-      <th class="font-bold">Weight:</th>
-      <td>{{ characterDetails.weightPounds }}</td>
-    </tr>
-  </table>
+    <div
+      *ngIf="selectedCharacterDetails() | async; let characterDetails"
+      class="flex flex-col gap-4"
+    >
+      <div class="flex w-full justify-center">
+        <img [src]="characterDetails.imageUrl" width="250px" height="250px" />
+      </div>
+
+      <table class="flex flex-col gap-4 p-4 text-center">
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Name:</th>
+          <td>{{ characterDetails.name }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Birth year:</th>
+          <td>{{ characterDetails.birthYear }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Sex:</th>
+          <td>{{ characterDetails.sex }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Height:</th>
+          <td>{{ characterDetails.heightInches }}</td>
+        </tr>
+        <tr class="grid grid-cols-2">
+          <th class="font-bold">Weight:</th>
+          <td>{{ characterDetails.weightPounds }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
