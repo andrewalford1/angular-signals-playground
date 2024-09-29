@@ -1,7 +1,7 @@
 <div class="grid h-full grid-cols-2 gap-8">
   <div class="grid h-full grid-rows-2 gap-8">
     <div
-      class="border-star-wars-yellow flex flex-col gap-4 rounded-md border-2 p-4"
+      class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
     >
       <h2 class="text-3xl font-bold">Episode Selector</h2>
 
@@ -20,31 +20,27 @@
       </div>
     </div>
     <div
-      class="border-star-wars-yellow flex flex-col gap-4 rounded-md border-2 p-4"
+      class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
     >
       <h2 class="text-3xl font-bold">Character Selector</h2>
 
       <div class="flex flex-row flex-wrap gap-4 scroll-auto p-4">
-        @if (charactersByEpisode().length > 0) {
-          @for (character of charactersByEpisode(); track $index) {
-            <h3
-              class="text-xl font-bold hover:text-white"
-              [ngClass]="{
-                'text-white underline': character.id == selectedCharacter()?.id,
-              }"
-              (click)="selectCharacter(character)"
-            >
-              {{ character.name }}
-            </h3>
-          }
-        } @else {
-          <h3 class="text-xl font-bold">Select a Episode to begin</h3>
+        @for (character of charactersByEpisode(); track $index) {
+          <h3
+            class="text-xl font-bold hover:text-white"
+            [ngClass]="{
+              'text-white underline': character.id == selectedCharacter()?.id,
+            }"
+            (click)="selectCharacter(character)"
+          >
+            {{ character.name }}
+          </h3>
         }
       </div>
     </div>
   </div>
   <div
-    class="border-star-wars-yellow flex flex-col gap-4 rounded-md border-2 p-4"
+    class="flex flex-col gap-4 rounded-md border-2 border-star-wars-yellow p-4"
   >
     <h2 class="text-3xl font-bold">Selected Character</h2>
 
@@ -57,10 +53,6 @@
       </div>
 
       <table class="flex flex-col gap-4 p-4 text-center">
-        <tr class="grid grid-cols-2">
-          <th class="font-bold">ID:</th>
-          <td>{{ characterDetails.id }}</td>
-        </tr>
         <tr class="grid grid-cols-2">
           <th class="font-bold">Name:</th>
           <td>{{ characterDetails.name }}</td>

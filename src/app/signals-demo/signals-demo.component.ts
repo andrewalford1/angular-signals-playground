@@ -5,7 +5,6 @@ import { Film } from '../models/Film';
 import { CommonModule } from '@angular/common';
 import { Character } from '../models/Character';
 import { CharacterDetails } from '../models/CharacterDetails';
-import { take } from 'rxjs';
 
 @Component({
   selector: 'app-signals-demo',
@@ -16,13 +15,13 @@ import { take } from 'rxjs';
 export class SignalsDemoComponent {
   protected episodes = signal<Film[]>([]);
   //protected selectedEpisodeSubject = new Subject<number>();
-  protected selectedEpisode = signal<number | undefined>(undefined);
   protected charactersByEpisode = signal<Character[]>([]);
-
-  protected selectedCharacter = signal<Character | undefined>(undefined);
   protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
     undefined,
   );
+
+  protected selectedEpisode = signal<number | undefined>(undefined);
+  protected selectedCharacter = signal<Character | undefined>(undefined);
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
     // this.selectedEpisodeSubject
