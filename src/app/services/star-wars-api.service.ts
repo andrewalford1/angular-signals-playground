@@ -11,10 +11,6 @@ import { CharacterDetails } from '../models/CharacterDetails';
 export class StarWarsApiService {
   constructor(private readonly httpClient: HttpClient) {}
 
-  public getPlanets(): Observable<object> {
-    return this.httpClient.get('https://swapi.dev/api/planets/');
-  }
-
   public getFilms(): Observable<Film[]> {
     return this.httpClient.get<any>('https://swapi.dev/api/films/').pipe(
       map((x) => {
@@ -53,8 +49,8 @@ export class StarWarsApiService {
       );
   }
 
-  public getCharactersByEpisodeId(episodeId: number): Observable<Character[]> {
-    return this.getCharacterUrlsByEpisode(episodeId).pipe(
+  public getCharactersByEpisode(episode: Film): Observable<Character[]> {
+    return this.getCharacterUrlsByEpisode(episode).pipe(
       switchMap((urls: string[]) => {
         const requests = urls.map((url) => this.httpClient.get<any>(url));
         return forkJoin(requests);
@@ -73,13 +69,13 @@ export class StarWarsApiService {
     );
   }
 
-  private getCharacterUrlsByEpisode(episodeId: number): Observable<string[]> {
+  private getCharacterUrlsByEpisode(episode: Film): Observable<string[]> {
     return this.httpClient.get<any>('https://swapi.dev/api/films/').pipe(
       map((x) => {
-        const films = x.results as any[];
-        return films[episodeId];
+        const episodes = x.results as any[];
+        return episodes[episode.id];
       }),
-      map((film) => film.characters),
+      map((x) => x.characters),
     );
   }
 }

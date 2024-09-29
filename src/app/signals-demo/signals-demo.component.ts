@@ -20,7 +20,7 @@ export class SignalsDemoComponent {
     undefined,
   );
 
-  protected selectedEpisode = signal<number | undefined>(undefined);
+  protected selectedEpisode = signal<Film | undefined>(undefined);
   protected selectedCharacter = signal<Character | undefined>(undefined);
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
@@ -37,10 +37,10 @@ export class SignalsDemoComponent {
 
     // Fetch characters by episode.
     effect(() => {
-      const selectedEpisodeId = this.selectedEpisode();
-      if (selectedEpisodeId !== undefined) {
+      const selectedEpisode = this.selectedEpisode();
+      if (selectedEpisode !== undefined) {
         starWarsService
-          .getCharactersByEpisodeId(selectedEpisodeId)
+          .getCharactersByEpisode(selectedEpisode)
           .pipe(takeUntilDestroyed(destroyRef))
           .subscribe((x) => this.charactersByEpisode.set(x));
       }
@@ -60,15 +60,9 @@ export class SignalsDemoComponent {
     });
   }
 
-  protected selectEpisode(episodeId: number) {
+  protected selectEpisode(episode: Film) {
     this.charactersByEpisode.set([]);
-
-    if (episodeId == this.selectedEpisode()) {
-      this.selectedEpisode.set(undefined);
-    } else {
-      this.selectedEpisode.set(episodeId);
-    }
-    //this.selectedEpisodeSubject.next(episodeId);
+    this.selectedEpisode.set(episode);
   }
 
   protected selectCharacter(character: Character) {
