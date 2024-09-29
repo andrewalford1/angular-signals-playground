@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+---
+
+## Publishing to Github pages
+
+To get this project to run on Github pages, I followed this tutorial:
+
+When ready to push changes to the gh-pages branch, run these two commands:
+
+```
+ng build --output-path=dist --base-href="/angular-signals-playground/"
+```
+
+```
+ ngh --dir=dist/browser
+```
