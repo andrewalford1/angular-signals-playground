@@ -9,9 +9,9 @@ import { Character } from '../models/Character';
   selector: 'app-states-demo',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './states-demo.component.html',
+  templateUrl: './declarative-signals-demo.component.html',
 })
-export class StatesDemoComponent implements OnInit {
+export class DeclarativeSignalsDemoComponent implements OnInit {
   private readonly starWarsService = inject(StarWarsApiService);
 
   protected episodes: Episode[] = [];
