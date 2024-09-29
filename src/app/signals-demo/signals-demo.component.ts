@@ -1,7 +1,7 @@
 import { Component, DestroyRef, effect, signal } from '@angular/core';
 import { StarWarsApiService } from '../services/star-wars-api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Film } from '../models/Film';
+import { Episode } from '../models/Episode';
 import { CommonModule } from '@angular/common';
 import { Character } from '../models/Character';
 import { CharacterDetails } from '../models/CharacterDetails';
@@ -13,14 +13,14 @@ import { CharacterDetails } from '../models/CharacterDetails';
   templateUrl: './signals-demo.component.html',
 })
 export class SignalsDemoComponent {
-  protected episodes = signal<Film[]>([]);
+  protected episodes = signal<Episode[]>([]);
   //protected selectedEpisodeSubject = new Subject<number>();
   protected charactersByEpisode = signal<Character[]>([]);
   protected selectedCharacterDetails = signal<CharacterDetails | undefined>(
     undefined,
   );
 
-  protected selectedEpisode = signal<Film | undefined>(undefined);
+  protected selectedEpisode = signal<Episode | undefined>(undefined);
   protected selectedCharacter = signal<Character | undefined>(undefined);
 
   constructor(starWarsService: StarWarsApiService, destroyRef: DestroyRef) {
@@ -33,7 +33,7 @@ export class SignalsDemoComponent {
     //   )
     //   .subscribe((x) => this.charactersByEpisode.set(x));
 
-    starWarsService.getFilms().subscribe((x) => this.episodes.set(x));
+    starWarsService.getEpisodes().subscribe((x) => this.episodes.set(x));
 
     // Fetch characters by episode.
     effect(() => {
@@ -60,7 +60,7 @@ export class SignalsDemoComponent {
     });
   }
 
-  protected selectEpisode(episode: Film) {
+  protected selectEpisode(episode: Episode) {
     this.charactersByEpisode.set([]);
     this.selectedEpisode.set(episode);
   }
