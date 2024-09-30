@@ -1,5 +1,7 @@
 # AngularSignalsPlayground
 
+[Click here to view the playground on Github pages](https://andrewalford1.github.io/angular-signals-playground/)
+
 ---
 
 ## Publishing to Github pages
